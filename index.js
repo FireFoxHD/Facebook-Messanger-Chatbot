@@ -88,21 +88,20 @@ function callSendAPI(sender_psid, response) {
   //    console.log("ERROR ------>", error);
   //  });
 
-   axios.post(
-    "https://graph.facebook.com/v7.0/me/messages",
+   axios.post("https://graph.facebook.com/v7.0/me/messages",
     {
       recipient: { id: sender_psid },
-      message: response,
+      message: response
     },
     {
-      params: {
-        access_token: accessToken,
-      },
+      params: {access_token: accessToken}
     },
-    (err) => {
-      if (err) {
-        console.log("Error sending message: ", err);
-      }
-    }
-  );
+    // (err) => {
+    //   if (err) {
+    //     console.log("Error sending message: ", err);
+    //   }
+    // }
+  ).catch((error)=>{
+      console.log("ERROR ------>", error);
+   });
 }
