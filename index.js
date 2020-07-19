@@ -27,11 +27,11 @@ app.post("/webhook", (req, res) => {
 
       let webhook_event = body.entry[0].messaging[0];  
       let sender_psid = webhook_event.sender.id;
+      res.status(200).send("EVENT_RECEIVED");
+      handleMessage(sender_psid, webhook_event);         
+    
 
-      return handleMessage(sender_psid, webhook_event);         
-    });
-
-    res.status(200).send("EVENT_RECEIVED");
+    
   } else {
     // Returns a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
