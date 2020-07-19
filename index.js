@@ -81,10 +81,28 @@ function callSendAPI(sender_psid, response) {
 };
 
   // Send the HTTP request to the Messenger Platform
-   axios.post(`https://graph.facebook.com/v7.0/me/messages?access_token=${accessToken}`, request_body)
-     .then(response=>{
-     console.log("RESPONSE ----->", response);
-   }).catch((error)=>{
-     console.log("ERROR ------>", error);
-   });
+  //  axios.post(`https://graph.facebook.com/v7.0/me/messages?access_token=${accessToken}`, request_body)
+  //    .then(response=>{
+  //    console.log("RESPONSE ----->", response);
+  //  }).catch((error)=>{
+  //    console.log("ERROR ------>", error);
+  //  });
+
+   axios.post(
+    "https://graph.facebook.com/v7.0/me/messages",
+    {
+      recipient: { id: recipientId },
+      message: response,
+    },
+    {
+      params: {
+        access_token: accessToken,
+      },
+    },
+    (err) => {
+      if (err) {
+        console.log("Error sending message: ", err);
+      }
+    }
+  );
 }
