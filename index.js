@@ -91,7 +91,7 @@ function callSendAPI(sender_psid, response) {
    axios.post(
     "https://graph.facebook.com/v7.0/me/messages",
     {
-      recipient: { id: recipientId },
+      recipient: { id: sender_psid },
       message: response,
     },
     {
