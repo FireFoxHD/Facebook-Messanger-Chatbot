@@ -24,7 +24,7 @@ app.post("/webhook", (req, res) => {
       
       let sender_psid = webhook_event.sender.id;
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message);        
+        return handleMessage(sender_psid, webhook_event.message);        
       }  
     });
 
@@ -81,7 +81,7 @@ function callSendAPI(sender_psid, response) {
 };
 
   // Send the HTTP request to the Messenger Platform
-   axios.post(`https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`, request_body)
+   axios.post(`https://graph.facebook.com/v7.0/me/messages?access_token=${accessToken}`, request_body)
      .then(response=>{
      console.log("RESPONSE ----->", response);
    }).catch((error)=>{
