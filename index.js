@@ -83,13 +83,20 @@ function callSendAPI(sender_psid, response) {
   }
 
   
-  axios.post('https://graph.facebook.com/v7.0/me/messages', request_body, params)
-    .then(response=>{
-      console.log("RESPONSE ----->", response);
-    }).catch((error)=>{
-      console.log("ERROR ------>", error);
-    });
-  }
+  axios.post('https://graph.facebook.com/v7.0/me/messages', request_body, params,
+    (err)=>{
+          if (err) {
+            console.log("#### ERROR ####: ", err);
+          }
+    }
+  );
+}
+  //   .then(response=>{
+  //     console.log("RESPONSE ----->", response);
+  //   }).catch((error)=>{
+  //     console.log("ERROR ------>", error);
+  //   });
+  // }
 
 //    axios.post("https://graph.facebook.com/v7.0/me/messages",
 //    {
