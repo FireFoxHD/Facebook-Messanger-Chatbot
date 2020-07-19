@@ -74,40 +74,60 @@ function handleMessage(sender_psid, received_message) {
 function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
-  "recipient":{
-     "id": sender_psid
-  },
-  "message": response
-};
+    recipient :{id : sender_psid},
+    message : response
+  };
 
-  // Send the HTTP request to the Messenger Platform
-  //  axios.post(`https://graph.facebook.com/v7.0/me/messages?access_token=${accessToken}`, request_body)
-  //    .then(response=>{
-  //    console.log("RESPONSE ----->", response);
-  //  }).catch((error)=>{
-  //    console.log("ERROR ------>", error);
-  //  });
+  let params = {
+    params: {access_token: accessToken}
+  }
 
-   axios.post("https://graph.facebook.com/v7.0/me/messages",
-   {
-      "recipient": { id: sender_psid },
-        "message":{
-        "attachment":{
-          "type":"image", 
-          "payload":{
-            "url":"https://images.unsplash.com/photo-1588189697996-df0739f187e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", 
-            "is_reusable":true
-          }
-        }
-      }
-    },
-    {
-      params: {access_token: accessToken}
-    },
-    (err) => {
-      if (err) {
-        console.log("#### ERROR ####: ", err);
-      }
-    }
-  );
-}
+  
+  axios.post('https://graph.facebook.com/v7.0/me/messages', request_body, params)
+    .then(response=>{
+      console.log("RESPONSE ----->", response);
+    }).catch((error)=>{
+      console.log("ERROR ------>", error);
+    });
+  }
+
+//    axios.post("https://graph.facebook.com/v7.0/me/messages",
+//    {
+//       recipient: { id: sender_psid },
+//       message: response
+//     },
+//     {
+//         params: {access_token: accessToken}
+//     },
+//     (err) => {
+//       if (err) {
+//         console.log("#### ERROR ####: ", err);
+//       }
+//     }
+//   );
+// }
+
+//SENDS IMAGE RESPONSE
+
+// axios.post("https://graph.facebook.com/v7.0/me/messages", {
+//       "recipient": { id: sender_psid },
+//         "message":{
+//         "attachment":{
+//           "type":"image", 
+//           "payload":{
+//             "url":"https://images.unsplash.com/photo-1588189697996-df0739f187e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", 
+//             "is_reusable":true
+//           }
+//         }
+//       }
+//     },
+//     {
+//       params: {access_token: accessToken}
+//     },
+//     (err) => {
+//       if (err) {
+//         console.log("#### ERROR ####: ", err);
+//       }
+//     }
+//   );
+// }
