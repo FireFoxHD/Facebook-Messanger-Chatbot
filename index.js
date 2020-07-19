@@ -8,6 +8,10 @@ app.listen(process.env.PORT || 5000, () => console.log("webhook is listening"));
 
 const accessToken = process.env.PAGE_ACCESS_TOKEN;
 
+app.get('/', (req,res)=>{
+  res.send('Hello from bot!')
+})
+
 app.post("/webhook", (req, res) => {
   let body = req.body;
 
