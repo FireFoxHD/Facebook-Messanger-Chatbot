@@ -90,8 +90,16 @@ function callSendAPI(sender_psid, response) {
 
    axios.post("https://graph.facebook.com/v7.0/me/messages",
    {
-      recipient: { id: sender_psid },
-      message: response
+      "recipient": { id: sender_psid },
+        "message":{
+        "attachment":{
+          "type":"image", 
+          "payload":{
+            "url":"https://images.unsplash.com/photo-1588189697996-df0739f187e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80", 
+            "is_reusable":true
+          }
+        }
+      }
     },
     {
       params: {access_token: accessToken}
