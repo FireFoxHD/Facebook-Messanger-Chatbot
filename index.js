@@ -89,19 +89,17 @@ function callSendAPI(sender_psid, response) {
   //  });
 
    axios.post("https://graph.facebook.com/v7.0/me/messages",
-    {
+   {
       recipient: { id: sender_psid },
       message: response
     },
     {
       params: {access_token: accessToken}
     },
-    // (err) => {
-    //   if (err) {
-    //     console.log("Error sending message: ", err);
-    //   }
-    // }
-  ).catch((error)=>{
-      console.log("ERROR ------>", error);
-   });
+    (err) => {
+      if (err) {
+        console.log("#### ERROR ####: ", err);
+      }
+    }
+  );
 }
