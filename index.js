@@ -65,7 +65,7 @@ function handleMessage(sender_psid, webhook_event){
     //
     let received_message = webhook_event.message;
 
-    const greeting = firstTrait(recieved_message.nlp, 'wit$greetings');
+    const greeting = firstTrait(received_message.nlp, 'wit$greetings');
     if (greeting && greeting.confidence > 0.8) {
       response = {
         text: "Greeting Detected"
