@@ -16,47 +16,36 @@ app.post("/webhook", (req, res) => {
   let body = req.body;
 
   if (body.object === "page") {
-    
-    // body.entry.forEach(function(entry) {
-     
-    //   let webhook_event = entry.messaging[0];  
-    //   let sender_psid = webhook_event.sender.id;
 
-    //   return handleMessage(sender_psid, webhook_event);         
-    // });
+    res.status(200).send("EVENT_RECEIVED");
 
-      let webhook_event = body.entry[0].messaging[0];  
+    body.entry.forEach(function(entry) {
+      let webhook_event = entry.messaging[0];  
       let sender_psid = webhook_event.sender.id;
-      res.status(200).send("EVENT_RECEIVED");
-      handleMessage(sender_psid, webhook_event);         
-    
+      return handleMessage(sender_psid, webhook_event);         
+    });
 
-    
   } else {
-    // Returns a '404 Not Found' if event is not from a page subscription
-    res.sendStatus(404);
+    res.sendStatus(404); // Returns a '404 Not Found' if event is not from a page subscription
   }
 });
 
 app.get("/webhook", (req, res) => {
-  // Your verify token. Should be a random string.
-  let VERIFY_TOKEN = "anything";
+  
+  let VERIFY_TOKEN = "anything"; // Your verify token. Should be a random string.
 
   // Parse the query params
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];
   let challenge = req.query["hub.challenge"];
 
-  // Checks if a token and mode is in the query string of the request
-  if (mode && token) {
-    // Checks the mode and token sent is correct
+  if (mode && token) {// Checks if a token and mode is in the query string of the request
+
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      // Responds with the challenge token from the request
       console.log("WEBHOOK_VERIFIED");
       res.status(200).send(challenge);
     } else {
-      // Responds with '403 Forbidden' if verify tokens do not match
-      res.sendStatus(403);
+      res.sendStatus(403);// Responds with '403 Forbidden' if verify tokens do not match
     }
   }
 });
@@ -75,9 +64,18 @@ function handleMessage(sender_psid, webhook_event){
 
     //
     let received_message = webhook_event.message;
-    response = {
-      text: `You sent the message: "${received_message.text}". Now send me an image!`
-    };
+
+    const greeting = firstTrait(recieved_message.nlp, 'wit$greetings');
+    if (greeting && greeting.confidence > 0.8) {
+      response = {
+        text: "Greeting Detected"
+      };
+    } else { 
+      response = {
+        text: "Dont think thats as greeting"
+      };
+    }
+   
     
   }
 
@@ -115,4 +113,10 @@ function callSendAPI(sender_psid, response) {
           }
     }
   );
+}
+
+//===========   NLP STUFF  ========================
+
+function firstTrait(nlp, name) {
+  return nlp && nlp.entities && nlp.traits[name] && nlp.traits[name][0];
 }
