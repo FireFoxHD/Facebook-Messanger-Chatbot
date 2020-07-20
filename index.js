@@ -97,40 +97,8 @@ function handleMessage(sender_psid, webhook_event){
 function callSendAPI(sender_psid, response) {
   
   let request_body = {
-      "recipient":{
-        "id": sender_psid
-      },
-      "message":{
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"generic",
-            "elements":[
-               {
-                "title":"Welcome!",
-                "image_url":"https://petersfancybrownhats.com/company_image.png",
-                "subtitle": response,
-                "default_action": {
-                  "type": "web_url",
-                  "url": "https://petersfancybrownhats.com/view?item=103",
-                  "webview_height_ratio": "tall",
-                },
-                "buttons":[
-                  {
-                    "type":"web_url",
-                    "url":"https://petersfancybrownhats.com",
-                    "title":"View Website"
-                  },{
-                    "type":"postback",
-                    "title":"Start Chatting",
-                    "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                  }              
-                ]      
-              }
-            ]
-          }
-        }
-      }
+    recipient :{id : sender_psid},
+    message : response
   };
 
   const params = {
